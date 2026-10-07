@@ -1,12 +1,13 @@
-
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Product.BLL.Implementation;
 using Product.BLL.Interfaces;
 using Product.DAL.Context;
 using Product.DAL.Implementation;
 using Product.DAL.Interfaces;
-using System;
 using QuestPDF.Infrastructure;
+using System;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 QuestPDF.Settings.License = LicenseType.Community;
@@ -32,6 +33,7 @@ builder.Services.AddScoped<IProductImageService, ProductImageService>();
 builder.Services.AddScoped<IReportService, ReportService>();
 builder.Services.AddScoped<IQrService, QrService>();
 
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // CORS for frontend development (if needed)
 builder.Services.AddCors(options =>
@@ -43,6 +45,19 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
             .WithExposedHeaders("Content-Disposition");
+    });
+});
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.AddFixedWindowLimiter("EmailRateLimit", limiterOptions =>
+    {
+        limiterOptions.PermitLimit = 5;
+        limiterOptions.Window = TimeSpan.FromMinutes(1);
+        limiterOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        limiterOptions.QueueLimit = 0;
     });
 });
 
