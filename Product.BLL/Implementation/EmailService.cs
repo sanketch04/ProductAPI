@@ -48,8 +48,7 @@ public class EmailService : IEmailService
 
         var email = new MimeMessage();
 
-        email.From.Add(
-            new MailboxAddress(senderName, senderEmail));
+        email.From.Add(new MailboxAddress(senderName, senderEmail));
 
         email.To.Add(MailboxAddress.Parse(toEmail));
         email.Subject = subject;
