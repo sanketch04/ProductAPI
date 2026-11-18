@@ -1,11 +1,10 @@
-﻿
-using Product.DAL.Entities;
+﻿using Product.DAL.Entities;
 
-namespace Product.DAL.Interfaces
+namespace Product.DAL.Interfaces.ProductInterfaces
 {
     public interface IProductRepository
     {
-        Task<List<ProductEntity>> GetAllAsync();
+        Task<List<ProductEntity>> GetAllAsync(int pageNumber = 1, int pageSize = 10);
 
         Task<ProductEntity?> GetByIdAsync(int id);
 

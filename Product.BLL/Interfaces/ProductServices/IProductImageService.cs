@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Product.BLL.Interfaces
+namespace Product.BLL.Interfaces.ProductServices
 {
     public interface IProductImageService
     {

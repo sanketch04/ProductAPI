@@ -1,6 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
-using Product.BLL.Interfaces;
+using Product.BLL.Interfaces.ReportSevrice;
 
 namespace ProductAPI.Controllers
 {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Product.API.Models;
-using Product.BLL.Interfaces;
+using Product.BLL.Interfaces.ReportSevrice;
 using System.Text;
 
 namespace Product.API.Controllers;

@@ -1,12 +1,16 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Product.BLL.Interfaces;
+using Microsoft.AspNetCore.RateLimiting;
+using Product.BLL.Interfaces.ProductServices;
+using Product.BLL.Interfaces.ReportSevrice;
 using Product.Common.DTOs;
 
 namespace ProductAPI.Controllers
 {
     [ApiController]
     [Route("api/products")]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -25,14 +29,10 @@ namespace ProductAPI.Controllers
 
         // GET: api/products
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int pageNumber=1,int pageSize=10)
         {
-            Console.WriteLine("1. GetAll API started");
 
-            var products = await _productService.GetAllAsync();
-
-            Console.WriteLine("2. Product service completed");
-            Console.WriteLine($"3. Products found: {products.Count}");
+            var products = await _productService.GetAllAsync(pageNumber,pageSize);
 
             return Ok(products);
         }

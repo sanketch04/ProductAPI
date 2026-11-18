@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Product.API.Controllers;
 using Product.API.Models;
-using Product.BLL.Interfaces;
+using Product.BLL.Interfaces.ReportSevrice;
 using Xunit;
 
 namespace Product.API.Tests.Controllers;

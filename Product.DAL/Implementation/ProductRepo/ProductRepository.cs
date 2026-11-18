@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Product.DAL.Context;
 using Product.DAL.Entities;
-using Product.DAL.Interfaces;
+using Product.DAL.Interfaces.ProductInterfaces;
 
-namespace Product.DAL.Implementation
+namespace Product.DAL.Implementation.ProductRepo
 {
     public class ProductRepository : IProductRepository
     {
@@ -15,10 +15,14 @@ namespace Product.DAL.Implementation
             _context = context;
         }
 
-        public async Task<List<ProductEntity>> GetAllAsync()
+        public async Task<List<ProductEntity>> GetAllAsync(int pageNumber=1,int pageSize=10)
         {
+            pageNumber = Math.Max(1, pageNumber);
+            pageSize = Math.Clamp(pageSize, 1, 10);
             return await _context.Products
                 .AsNoTracking()
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .OrderBy(p => p.Id)
                 .ToListAsync();
         }

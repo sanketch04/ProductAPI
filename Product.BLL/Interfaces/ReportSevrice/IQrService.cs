@@ -1,5 +1,4 @@
-﻿
-namespace Product.BLL.Interfaces
+﻿namespace Product.BLL.Interfaces.ReportSevrice
 {
     public interface IQrService
     {
